@@ -44,7 +44,7 @@ inline static char *rtrim(char *str)
 	return str;
 }
 
-static struct option *load_options(FILE *fp)
+static struct option *load_option(FILE *fp)
 {
 	struct option *option;
 	char eol[2] = "";
@@ -52,46 +52,60 @@ static struct option *load_options(FILE *fp)
 
 	option = calloc(1, sizeof(*option));
 
-	while (1) {
-		m = fscanf(fp, " %63s %127[^\n] %1[\n]",
-		               option->name, option->value, eol);
+start:
+	m = fscanf(fp, " %63s %127[^\n] %1[\n]",
+		       option->name, option->value, eol);
 
-		rtrim(option->value);
+	rtrim(option->value);
 
-		if (-1 == m) {
-			free(option);
-			return NULL;
-		}
-
-		if (0 == m || '#' == option->name[0])
-			continue;
-
-		option->next = load_options(fp);
-		return option;
+	if (-1 == m) {
+		free(option);
+		return NULL;
 	}
+
+	if (0 == m || '#' == option->name[0])
+		goto start;
+
+	return option;
 }
 
 struct conf *conf_load(const char *path)
 {
+	struct option *option, *stack = NULL;
 	struct conf *conf;
 	FILE *fp;
 
 	if (NULL == (fp = fopen(path, "r")))
 		return NULL;
 
-	conf = malloc(sizeof(*conf));
-	conf->options = load_options(fp);
+	while (NULL != (option = load_option(fp))) {
+		option->next = stack;
+		stack = option;
+	}
+
+	fclose(fp);
+
+	conf = calloc(1, sizeof(*conf));
+
+	while (stack) {
+		option = stack;
+		stack = option->next;
+		option->next = conf->options;
+		conf->options = option;
+	}
 
 	return conf;
 }
 
 static void free_options(struct option *option)
 {
-	if (NULL == option)
-		return;
+	struct option *next;
 
-	free_options(option->next);
-	free(option);
+	while (option) {
+		next = option->next;
+		free(option);
+		option = next;
+	}
 }
 
 void conf_free(struct conf *conf)
