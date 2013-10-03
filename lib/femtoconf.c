@@ -19,13 +19,15 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "femtoconf.h"
+
 struct option {
 	char name[64];
 	char value[128];
 	struct option *next;
 };
 
-struct fconf {
+struct conf {
 	struct option *options;
 };
 
@@ -74,9 +76,9 @@ static struct option *load_options(FILE *fp)
 	}
 }
 
-struct fconf *fconf_load(const char *path)
+struct conf *conf_load(const char *path)
 {
-	struct fconf *conf;
+	struct conf *conf;
 	FILE *fp;
 
 	if (NULL == (fp = fopen(path, "r")))
@@ -97,7 +99,7 @@ static void free_options(struct option *option)
 	free(option);
 }
 
-void fconf_free(struct fconf *conf)
+void conf_free(struct conf *conf)
 {
 	if (NULL == conf)
 		return;
@@ -106,7 +108,7 @@ void fconf_free(struct fconf *conf)
 	free(conf);
 }
 
-const char *fconf_get(struct fconf *conf,
+const char *conf_get(struct conf *conf,
                       const char *name, size_t n, const char *dfl)
 {
 	size_t seen = 0;

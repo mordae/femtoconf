@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "fconf.h"
+#include "femtoconf.h"
 #include "cutest.h"
 
 inline static int eq(const char *a, const char *b)
@@ -24,44 +24,44 @@ inline static int eq(const char *a, const char *b)
 
 decl_test(load_free)
 {
-	struct fconf *conf = fconf_load("lib/test/test.conf");
+	struct conf *conf = conf_load("lib/test/test.conf");
 	assert(NULL != conf);
-	fconf_free(conf);
+	conf_free(conf);
 }
 
 decl_test(single)
 {
-	struct fconf *conf = fconf_load("lib/test/test.conf");
+	struct conf *conf = conf_load("lib/test/test.conf");
 
 	assert(NULL != conf);
-	assert(eq("bar", fconf_get(conf, "foo", 0, "fail")));
-	assert(NULL == fconf_get(conf, "foo", 1, NULL));
+	assert(eq("bar", conf_get(conf, "foo", 0, "fail")));
+	assert(NULL == conf_get(conf, "foo", 1, NULL));
 
-	assert(eq("kitty kitty", fconf_get(conf, "hello", 0, "fail")));
-	assert(NULL == fconf_get(conf, "hello", 1, NULL));
+	assert(eq("kitty kitty", conf_get(conf, "hello", 0, "fail")));
+	assert(NULL == conf_get(conf, "hello", 1, NULL));
 
-	fconf_free(conf);
+	conf_free(conf);
 }
 
 decl_test(empty)
 {
-	struct fconf *conf = fconf_load("lib/test/test.conf");
+	struct conf *conf = conf_load("lib/test/test.conf");
 
 	assert(NULL != conf);
-	assert(eq("", fconf_get(conf, "end", 0, "fail")));
+	assert(eq("", conf_get(conf, "end", 0, "fail")));
 
-	fconf_free(conf);
+	conf_free(conf);
 }
 
 decl_test(multi)
 {
-	struct fconf *conf = fconf_load("lib/test/test.conf");
+	struct conf *conf = conf_load("lib/test/test.conf");
 
 	assert(NULL != conf);
-	assert(eq("42", fconf_get(conf, "baz", 0, "fail")));
-	assert(eq("13", fconf_get(conf, "baz", 1, "fail")));
-	assert(eq("007", fconf_get(conf, "baz", 2, "fail")));
-	assert(NULL == fconf_get(conf, "baz", 3, NULL));
+	assert(eq("42", conf_get(conf, "baz", 0, "fail")));
+	assert(eq("13", conf_get(conf, "baz", 1, "fail")));
+	assert(eq("007", conf_get(conf, "baz", 2, "fail")));
+	assert(NULL == conf_get(conf, "baz", 3, NULL));
 
-	fconf_free(conf);
+	conf_free(conf);
 }

@@ -14,22 +14,22 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef _FCONF_H
-#define _FCONF_H 1
+#ifndef _FEMTOCONF_H
+#define _FEMTOCONF_H 1
 
 #include <stddef.h>
 
 /* Configuration file. */
-struct fconf;
+struct conf;
 
 /* Load specified configuration file. */
-struct fconf *fconf_load(const char *path);
+struct conf *conf_load(const char *path);
 
 /* Free loaded configuration. */
-void fconf_free(struct fconf *conf);
+void conf_free(struct conf *conf);
 
 /* Return value of nth given option or default if not present. */
-const char *fconf_get(struct fconf *conf,
-                      const char *name, size_t n, const char *dfl);
+const char *conf_get(struct conf *conf,
+                     const char *name, size_t n, const char *dfl);
 
-#endif				/* !_FCONF_H */
+#endif				/* !_FEMTOCONF_H */

@@ -1,11 +1,11 @@
-Name:		libfconf
+Name:		femtoconf
 Version:	1
 Release:	1%{?dist}
 Summary:	Even smaller configuration file parser library
 
 Group:		Development/Other
 License:	MIT
-URL:		http://github.com/Mordae/libfconf/
+URL:		http://github.com/Mordae/femtoconf/
 Source0:	%{name}-%{version}.tar.gz
 
 BuildRoot:      %_tmppath/%name-%version-%release-buildroot

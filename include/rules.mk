@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
 
-inc += fconf.h
+inc += femtoconf.h
 
 # EOF
