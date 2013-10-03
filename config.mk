@@ -1,7 +1,10 @@
 #!/usr/bin/make -f
 
+# Project name.
+package = $(shell grep ^Name: *.spec | awk '{print $$2}')
+
 # Project version.
-version = 0.1.0
+version = $(shell grep ^Version: *.spec | awk '{print $$2}')
 
 # Where to put build products;
 objdir = build/
