@@ -16,6 +16,7 @@ Library for parsing extremely simple key/value configuration files.
 
 %package devel
 Summary:	Development files for the femtoconf library.
+Group:		Development/Libraries
 
 %description devel
 Files required to build programs linking to the femtoconf library.
