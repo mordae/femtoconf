@@ -117,8 +117,8 @@ void conf_free(struct conf *conf)
 	free(conf);
 }
 
-const char *conf_get(struct conf *conf,
-                      const char *name, size_t n, const char *dfl)
+const char *conf_get(const struct conf *conf,
+                     const char *name, size_t n, const char *dfl)
 {
 	size_t seen = 0;
 	struct option *iter;

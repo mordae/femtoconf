@@ -29,7 +29,7 @@ struct conf *conf_load(const char *path);
 void conf_free(struct conf *conf);
 
 /* Return value of nth given option or default if not present. */
-const char *conf_get(struct conf *conf,
+const char *conf_get(const struct conf *conf,
                      const char *name, size_t n, const char *dfl);
 
 #endif				/* !_FEMTOCONF_H */
