@@ -3,7 +3,7 @@ Version:	1
 Release:	1%{?dist}
 Summary:	Even smaller configuration file parser library
 
-Group:		Development/Other
+Group:		System Environment/Libraries
 License:	MIT
 URL:		http://github.com/Mordae/femtoconf/
 Source0:	%{name}-%{version}.tar.gz
@@ -12,6 +12,13 @@ BuildRoot:      %_tmppath/%name-%version-%release-buildroot
 
 %description
 Library for parsing extremely simple key/value configuration files.
+
+
+%package devel
+Summary:	Development files for the femtoconf library.
+
+%description devel
+Files required to build programs linking to the femtoconf library.
 
 %prep
 %setup -q
@@ -30,8 +37,11 @@ rm -rf "$RPM_BUILD_ROOT"
 
 
 %files
-%{_includedir}/*
-%{_libdir}/*
+%{_libdir}/libfemtoconf.so.*
+
+%files devel
+%{_libdir}/libfemtoconf.so
+%{_includedir}/femtoconf.h
 
 
 %changelog
