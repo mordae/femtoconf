@@ -31,11 +31,6 @@ struct conf {
 	struct option *options;
 };
 
-inline static void *memdup(const void *mem, size_t len)
-{
-	return memcpy(malloc(len), mem, len);
-}
-
 inline static char *rtrim(char *str)
 {
 	ssize_t i, len = strlen(str);
